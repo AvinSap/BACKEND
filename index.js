@@ -34,6 +34,18 @@ app.get ('/api/products' , async (req, res) =>{
     }
 });
 
+// GET SPECIFIC PRODUCT
+app.get('/api/products/:id', async(req, res) => {
+    try{
+        const { id } = req.params;
+        const product = await Product.findById(id);
+        res.status(200).json(product);
+    
+    } catch (error){
+        res.status(500).json({message: error.message});
+    }
+});
+
 mongoose.connect("mongodb+srv://avinsapkota7:j5UkzmFQoSFSSaym@backenddb.dekb0io.mongodb.net/Node-API?retryWrites=true&w=majority&appName=BackendDB")
 .then(() => {
     console.log("Connected successfully to the database!");
