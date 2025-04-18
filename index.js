@@ -4,6 +4,10 @@ const Product = require('./models/product.model');//connecting the product.
 const app = express()
 
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
+//ROUTES
+app.use("/api/products", productRoute);
 
 app.get('/', (req,res) =>{
     res.send ("Hello this is Avin's Node.js API ")//print this on the server(localhost:3000)
@@ -35,7 +39,7 @@ app.get ('/api/products' , async (req, res) =>{
 });
 
 // GET SPECIFIC PRODUCT
-app.get('/api/product/:id', async(req, res) => {
+app.get('/api/products/:id', async(req, res) => {
     try{
         const { id } = req.params;
         const product = await Product.findById(id);
@@ -47,7 +51,7 @@ app.get('/api/product/:id', async(req, res) => {
 });
 
 //UPDATING A PRODUCT
-app.put('/api/product/:id', async (req, res) => {
+app.put('/api/products/:id', async (req, res) => {
     try {
 
         const {id} = req.params;
@@ -66,7 +70,7 @@ app.put('/api/product/:id', async (req, res) => {
 });
 
 //DELETING A PRODUCT:
-app.delete("/api/product/:id", async (req, res) => {
+app.delete("/api/products/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const product = await Product.findByIdAndDelete(id);
